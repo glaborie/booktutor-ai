@@ -121,12 +121,17 @@ def create_book_qa_system(pdf_path: str):
     print("✅ Vector store ready")
 
     print("\n🤖 Connecting to local language model...")
+    # to make this work with Ollama
+    from langchain_openai import ChatOpenAI
+    from langchain_core.caches import BaseCache
+    from langchain_core.callbacks import Callbacks
+    ChatOpenAI.model_rebuild()
     llm = ChatOpenAI(
-        model="local-model",
-        openai_api_base="http://localhost:1234/v1",
-        openai_api_key="not-needed",
-        temperature=0,
-    )
+            model="llama3.1:8b",  # Or any other model you downloaded with Ollama
+            openai_api_base="http://localhost:11434/v1",
+            openai_api_key="not-needed",
+            temperature=0,
+    )    
 
     print("⛓️ Creating QA chain...")
 
